@@ -43,7 +43,7 @@ export default function Home() {
   const [randomFlightPath, setRandomFlightPath] = useState<Flight | null>(null);
   const [costFigure, setCostFigure] = useState<number | null>(null);
   const [randomFlights, setRandomFlights] = useState<Flight[]>([]); // Initialize as an empty array
-  const callSigns = [
+  const callSigns: string[] = [
     ...new Set(HelicopterData.flights.map((flight) => flight.callsign)),
   ];
   let [selectedCallSigns, setSelectedCallSigns] = useState<string[]>(callSigns);
@@ -89,12 +89,12 @@ export default function Home() {
       console.log(dateString);
       let matchingFlights;
       if (userDate) {
-        matchingFlights = HelicopterData.flights.filter((flight) => {
+        matchingFlights =  (HelicopterData.flights as Flight[]).filter((flight) => {
           const flightDate = flight.created.split("T")[0];
           return flightDate === userDate;
         });
       } else {
-        matchingFlights = HelicopterData.flights.filter((flight) => {
+        matchingFlights =  (HelicopterData.flights as Flight[]).filter((flight) => {
           const flightDate = flight.created.split("T")[0];
           return flightDate === dateString;
         });
@@ -116,7 +116,7 @@ export default function Home() {
         const filteredPositions = positions?.filter(
           (position) =>
             position?.latitude !== null && position?.longitude !== null
-        );
+        ) || [];
 
         // Calculate take-off and landing times for the flight
         const calculateTakeOffAndLanding = (positions: Position[]) => {
@@ -162,7 +162,7 @@ export default function Home() {
         const filteredPositions = positions?.filter(
           (position) =>
             position?.latitude !== null && position?.longitude !== null
-        );
+        ) || [];
         const routeData = filteredPositions?.map((position) => ({
           latitude: position?.latitude,
           longitude: position?.longitude,
@@ -264,7 +264,7 @@ export default function Home() {
 
           indexRef.current = 0;
 
-          function animatePoints() {
+          const animatePoints =()=> {
             const nextIndex = indexRef.current + 1;
             if (nextIndex < routeData!.length) {
               setTimeout(() => {
@@ -455,9 +455,9 @@ export default function Home() {
   return (
     <div className="flex flex-col h-full w-screen absolute">
       <MantineProvider
-        theme={{ colorScheme: "dark" }}
-        withGlobalStyles
-        withNormalizeCSS
+        // theme={{ colorScheme: "dark" }}
+        // withGlobalStyles
+        // withNormalizeCSS
       >
         <div className="search-bar">
           <input
