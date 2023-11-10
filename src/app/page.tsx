@@ -289,7 +289,7 @@ export default function Home() {
   //     generateRandomFlightPath();
   //   }
   // };
-
+// console.log(first)
   // const generateRandomFlightPath = () => {
 
   // };
