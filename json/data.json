@@ -1,0 +1,45 @@
+{
+    "flights": [
+      {
+        "callsign": "N221LA",
+        "aircraftRegistration": "N221LA",
+        "aircraftModeS": "A1E5B3",
+        "aircraftType": "AS50",
+        "aircraftClasses": [
+          "GENERAL_AVIATION",
+          "HELICOPTER"
+        ],
+        "aircraftTypeDescription": "Eurocopter AS350 B3 AStar",
+        "altitude": 500,
+        "latitude": 33.938896,
+        "longitude": -118.402447,
+        "source": "ADSB",
+        "created": "2019-07-01T01:19:48.000Z",
+        "updated": "2019-07-01T02:39:35.272Z",
+        "positions": [
+          {
+            "groundSpeed": 60,
+            "heading": 280,
+            "altitude": 925,
+            "verticalRate": 190,
+            "latitude": null,
+            "longitude": null,
+            "squawkCode": null,
+            "source": "ADSB",
+            "timestamp": "2019-07-01T01:21:27.577Z"
+          },
+          {
+            "groundSpeed": 60,
+            "heading": 291,
+            "altitude": 950,
+            "verticalRate": 120,
+            "latitude": 34.0621032714844,
+            "longitude": -118.2612641003667,
+            "squawkCode": null,
+            "source": "ADSB",
+            "timestamp": "2019-07-01T01:21:56.920Z"
+          }
+        ]
+    }
+]
+}
