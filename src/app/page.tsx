@@ -1,7 +1,14 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
+import { NextPage } from "next";
+
 import { Checkbox, MantineProvider } from "@mantine/core";
+// import Nav from "./components/nav";
+// import "./App.css";
+// import "./globals.css";
+// import "./Home.module.css";
+
 import HelicopterData from "../../json/data.json";
 
 interface Position {
@@ -28,7 +35,7 @@ interface HelicopterData {
   flights: Flight[];
 }
 
-export default function Home() {
+const Home: NextPage = () => {
   const shouldfilteropeninit =
     typeof window != "undefined" ? window.innerWidth >= 640 : false;
   const divRef = useRef<HTMLDivElement | null>(null);
@@ -43,12 +50,28 @@ export default function Home() {
   const [randomFlightPath, setRandomFlightPath] = useState<Flight | null>(null);
   const [costFigure, setCostFigure] = useState<number | null>(null);
   const [randomFlights, setRandomFlights] = useState<Flight[]>([]); // Initialize as an empty array
-  const callSigns: string[] = [
+  const callSigns = [
     ...new Set(HelicopterData.flights.map((flight) => flight.callsign)),
   ];
+
+  const [pollutionFigure, setPollutionFigure] = useState("");
+
   let [selectedCallSigns, setSelectedCallSigns] = useState<string[]>(callSigns);
 
-  console.log(userDate);
+  const [searchedAddressCoordinates, setSearchedAddressCoordinates] = useState<
+    [number, number] | null
+  >(null);
+  const [addressFound, setAddressFound] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string>("2019-01-01");
+
+  // Handler for changing the date
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    closeWindow();
+    setSelectedDate(event.target.value);
+    setUserDate(event.target.value);
+    // console.log(event.target.value)
+  };
+  // console.log(userDate);
   const flightPaths: { layerId: string; flight: Flight }[] = [];
 
   useEffect(() => {
@@ -86,15 +109,17 @@ export default function Home() {
 
       const date = selectedFlights.created;
       const dateString = date.split("T")[0];
-      console.log(dateString);
+      // console.log(dateString);
+
+      setSelectedDate(dateString);
       let matchingFlights;
       if (userDate) {
-        matchingFlights =  (HelicopterData.flights as Flight[]).filter((flight) => {
+        matchingFlights = HelicopterData.flights.filter((flight) => {
           const flightDate = flight.created.split("T")[0];
           return flightDate === userDate;
         });
       } else {
-        matchingFlights =  (HelicopterData.flights as Flight[]).filter((flight) => {
+        matchingFlights = HelicopterData.flights.filter((flight) => {
           const flightDate = flight.created.split("T")[0];
           return flightDate === dateString;
         });
@@ -116,7 +141,7 @@ export default function Home() {
         const filteredPositions = positions?.filter(
           (position) =>
             position?.latitude !== null && position?.longitude !== null
-        ) || [];
+        );
 
         // Calculate take-off and landing times for the flight
         const calculateTakeOffAndLanding = (positions: Position[]) => {
@@ -149,6 +174,9 @@ export default function Home() {
         // Calculate the cost for the flight
         const cost = (calculatedTakeOff + calculatedLanding) * 50;
 
+        const sergioisthebest = calculatedTakeOff + calculatedLanding;
+        // console.log("COST IS ---", sergioisthebest);
+
         // Accumulate the costs for each flight to calculate the total cost
         totalCost += cost;
       });
@@ -162,11 +190,16 @@ export default function Home() {
         const filteredPositions = positions?.filter(
           (position) =>
             position?.latitude !== null && position?.longitude !== null
-        ) || [];
+        );
         const routeData = filteredPositions?.map((position) => ({
           latitude: position?.latitude,
           longitude: position?.longitude,
         }));
+
+        // const routeData = filteredPositions?.map((position) => ({
+        //   latitude: position?.latitude,
+        //   longitude: position?.longitude,
+        // }));
 
         const timestamp = new Date().getTime();
         const sourceId = `random-route-${timestamp}-${index}`;
@@ -249,6 +282,27 @@ export default function Home() {
 
           const cost = (calculatedTakeOff + calculatedLanding) * 50;
           setCostFigure(cost);
+
+          // Assuming you have already parsed the JSON data and calculated the time_in_air as shown in the previous example
+
+          // Calculate pollutionFigure
+          // Assuming you have valid date/time strings in selectedFlight.updated and selectedFlight.created
+          const updatedTimestamp = Date.parse(selectedFlight.updated);
+          const createdTimestamp = Date.parse(selectedFlight.created);
+
+          if (isNaN(updatedTimestamp) || isNaN(createdTimestamp)) {
+            console.error(
+              "Invalid date/time format in selectedFlight.updated or selectedFlight.created"
+            );
+          } else {
+            const time_in_air = updatedTimestamp - createdTimestamp;
+            const pollutionFigure = (time_in_air / (60 * 1000)) * 0.00705; // Calculate as a number
+            const formattedPollutionFigure = pollutionFigure.toFixed(3); // Format it with 2 decimal places as a string
+
+            setPollutionFigure(
+              formattedPollutionFigure + " metric tons of Carbon Dioxide"
+            );
+          }
         });
 
         if (filteredPositions && filteredPositions.length > 0) {
@@ -264,7 +318,7 @@ export default function Home() {
 
           indexRef.current = 0;
 
-          const animatePoints =()=> {
+          function animatePoints() {
             const nextIndex = indexRef.current + 1;
             if (nextIndex < routeData!.length) {
               setTimeout(() => {
@@ -289,12 +343,13 @@ export default function Home() {
   //     generateRandomFlightPath();
   //   }
   // };
-// console.log(first)
+
   // const generateRandomFlightPath = () => {
 
   // };
 
   const handleRandomDateGeneratorClick = () => {
+    closeWindow();
     setUserDate(null);
     const randomIndex = Math.floor(
       Math.random() * HelicopterData.flights.length
@@ -313,8 +368,12 @@ export default function Home() {
         <input
           placeholder="DD-MM-YYYY"
           type="date"
-          onChange={(e) => setUserDate(e.target.value)}
-          className="border border-white text-white px-2 py-1"
+          // onChange={(e)=>setUserDate(e.target.value)}
+          className="border border-white text-black px-2 py-1"
+          value={selectedDate}
+          min="2019-01-01"
+          max="2019-12-31"
+          onChange={handleDateChange}
         />
       </div>
     </div>
@@ -325,7 +384,7 @@ export default function Home() {
       month: "2-digit",
       day: "2-digit",
     };
-    return new Date(dateString).toLocaleDateString(undefined, options);
+    return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
   const selectedFlightPathDetails = randomFlightPath && (
@@ -333,12 +392,15 @@ export default function Home() {
       <p>
         Callsign: {randomFlightPath.callsign}
         <br />
-        Date: {randomFlightPath.created.split("T")[0]}
+        Date: {formatFlightDate(randomFlightPath.created.split("T")[0])}
         <br />
         Cost Figure:{" "}
         {costFigure != null
           ? `$${costFigure.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`
           : "Calculating..."}
+        <br />
+        Carbon Dioxide Pollution Figure:{" "}
+        {pollutionFigure != null ? `${pollutionFigure}` : "Calculating..."}
       </p>
     </div>
   );
@@ -356,6 +418,7 @@ export default function Home() {
   };
 
   const handleAddressSubmit = async () => {
+    closeWindow();
     let addressToSearch = userAddress;
 
     if (selectedSuggestion !== null) {
@@ -371,7 +434,8 @@ export default function Home() {
 
       if (data.features.length > 0) {
         const coordinates = data.features[0].center;
-
+        setSearchedAddressCoordinates(coordinates);
+        setAddressFound(true);
         mapRef.current?.flyTo({
           center: coordinates,
           zoom: 14,
@@ -452,24 +516,54 @@ export default function Home() {
       ))}
     </div>
   );
+
+  useEffect(() => {
+    if (mapRef.current && searchedAddressCoordinates && addressFound) {
+      const marker = new mapboxgl.Marker()
+        .setLngLat(searchedAddressCoordinates)
+        .addTo(mapRef.current);
+    }
+  }, [searchedAddressCoordinates, addressFound]);
+
+  const formattedMonetaryCost = totalCost?.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
   return (
     <div className="flex flex-col h-full w-screen absolute">
+      <div className="flex-none">
+        {/* <Nav /> */}</div>
       <MantineProvider
-        // theme={{ colorScheme: "dark" }}
-        // withGlobalStyles
-        // withNormalizeCSS
+        theme={{ colorScheme: "dark" }}
+        withGlobalStyles
+        withNormalizeCSS
       >
         <div className="search-bar">
-          <input
+          {/* <input
             type="text"
             placeholder="Enter an address"
             value={userAddress}
             onChange={handleAddressChange}
             className="search-input"
-          />
-          <button onClick={handleAddressSubmit} className="search-button">
+          /> */}
+          <div className=" w-[270px] flex flex-row justify-start items-center gap-3 h-10 rounded-3xl border border-[#D0D5DD] px-2 bg-gray-700 text-white">
+            <svg viewBox="0 0 17.048 18" height={15} width={16}>
+              <path
+                d="M380.321,383.992l3.225,3.218c.167.167.341.329.5.506a.894.894,0,1,1-1.286,1.238c-1.087-1.067-2.179-2.131-3.227-3.236a.924.924,0,0,0-1.325-.222,7.509,7.509,0,1,1-3.3-14.207,7.532,7.532,0,0,1,6,11.936C380.736,383.462,380.552,383.685,380.321,383.992Zm-5.537.521a5.707,5.707,0,1,0-5.675-5.72A5.675,5.675,0,0,0,374.784,384.513Z"
+                transform="translate(-367.297 -371.285)"
+                fill="#757575"
+              />
+            </svg>
+            <input className="font-inter text-md text-regular text-left text-white bg-transparent outline-none"
+            placeholder="Search" 
+            value={userAddress}
+            onChange={handleAddressChange} />
+          </div>
+          {/* <button onClick={handleAddressSubmit} className="search-button">
             Find Address
-          </button>
+          </button> */}
         </div>
 
         <ul className="address-suggestions">
@@ -501,6 +595,7 @@ export default function Home() {
                 d="M14,12V19.88C14.04,20.18 13.94,20.5 13.71,20.71C13.32,21.1 12.69,21.1 12.3,20.71L10.29,18.7C10.06,18.47 9.96,18.16 10,17.87V12H9.97L4.21,4.62C3.87,4.19 3.95,3.56 4.38,3.22C4.57,3.08 4.78,3 5,3V3H19V3C19.22,3 19.43,3.08 19.62,3.22C20.05,3.56 20.13,4.19 19.79,4.62L14.03,12H14Z"
               />
             </svg>
+
             <span>Filter</span>
           </button>
           <div
@@ -509,9 +604,16 @@ export default function Home() {
             }`}
           >
             <div className="flex flex-col">
+              <h1 style={{ fontSize: "25px" }}>LAPD Helicopter Map</h1>
+
               <h4>
-                Monetary cost : <span>{totalCost && totalCost}</span>
+                Monetary cost :{" "}
+                <span>{totalCost && formattedMonetaryCost}</span>
               </h4>
+              <div>
+                Carbon Dioxide Pollution Released:{" "}
+                <span>{pollutionFigure}</span>
+              </div>
               <div className="mt-2 grid grid-cols-3 gap-4">
                 <button
                   className="align-middle bg-gray-800 rounded-lg px-3 py-2 text-sm md:text-base border border-gray-400"
@@ -529,14 +631,6 @@ export default function Home() {
                 >
                   Unselect All
                 </button>
-                {/* <button
-                  className="align-middle bg-gray-800 rounded-lg px-3 py-2 text-sm md:text-base border border-gray-400"
-                  onClick={() => {
-                    // Handle Invert
-                  }}
-                >
-                  Invert
-                </button> */}
               </div>
               {callSignFilter}
             </div>
@@ -561,14 +655,33 @@ export default function Home() {
               </div>
             )}
           </div>
-          {/* {totalCost && 
-          <div className="absolute inset-0 w-[15%] h-14  max-w-screen-md z-20 p-4 bg-white shadow-lg rounded-lg text-black">
-<h4>Monetary cost : <span>
-{totalCost}</span></h4>
-</div>} */}
+
           <div ref={divRef} className="map-container w-full h-full" />
+          {(typeof window !== "undefined"
+            ? window.innerWidth >= 640
+            : false) && (
+            <>
+              <div
+                className={`absolute md:mx-auto z-9 bottom-2 left-1 md:left-1/2 md:transform md:-translate-x-1/2`}
+              >
+                <a
+                  href="https://controller.lacity.gov/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img
+                    src="https://controller.lacity.gov/images/KennethMejia-logo-white-elect.png"
+                    className="h-9 md:h-10 z-40"
+                    alt="Kenneth Mejia LA City Controller Logo"
+                  />
+                </a>
+              </div>
+            </>
+          )}
         </div>
       </MantineProvider>
     </div>
   );
-}
+};
+
+export default Home;
