@@ -9,7 +9,25 @@ import { Checkbox, MantineProvider } from "@mantine/core";
 // import "./globals.css";
 // import "./Home.module.css";
 
-import HelicopterData from "../../json/data.json";
+import HelicopterData8 from "../../flight_chunks/flight_chunk_1.json";
+import HelicopterData1 from "../../flight_chunks/flight_chunk_2.json";
+import HelicopterData2 from "../../flight_chunks/flight_chunk_3.json";
+import HelicopterData3 from "../../flight_chunks/flight_chunk_4.json";
+import HelicopterData4 from "../../flight_chunks/flight_chunk_5.json";
+import HelicopterData5 from "../../flight_chunks/flight_chunk_6.json";
+import HelicopterData6 from "../../flight_chunks/flight_chunk_7.json";
+import HelicopterData7 from "../../flight_chunks/flight_chunk_8.json";
+
+// const combinedData = [
+//   ...HelicopterData8.flights,
+//   ...HelicopterData1.flights,
+//   ...HelicopterData2.flights,
+//   ...HelicopterData3.flights,
+//   ...HelicopterData4.flights,
+//   ...HelicopterData5.flights,
+//   ...HelicopterData6.flights,
+//   ...HelicopterData7.flights,
+// ];
 
 interface Position {
   latitude: number;
@@ -36,6 +54,19 @@ interface HelicopterData {
 }
 
 const Home: NextPage = () => {
+
+  const HelicopterData: HelicopterData = {
+    flights: [
+      ...HelicopterData8.flights,
+      ...HelicopterData1.flights,
+      ...HelicopterData2.flights,
+      ...HelicopterData3.flights,
+      ...HelicopterData4.flights,
+      ...HelicopterData5.flights,
+      ...HelicopterData6.flights,
+      ...HelicopterData7.flights,
+    ],
+  };
   const shouldfilteropeninit =
     typeof window != "undefined" ? window.innerWidth >= 640 : false;
   const divRef = useRef<HTMLDivElement | null>(null);
