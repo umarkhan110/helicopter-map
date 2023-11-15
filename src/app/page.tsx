@@ -84,11 +84,18 @@ const filterPositions = (flight: Flight): Flight[] => {
 
 const HelicopterData: HelicopterDataInter = {
   flights: [
-    ...HelicopterData2.flights.map(filterPositions),
-    ...HelicopterData5.flights.map(filterPositions),
-    ...HelicopterData9.flights.map(filterPositions),
+    ...HelicopterData1.flights.flatMap(filterPositions),
+    ...HelicopterData2.flights.flatMap(filterPositions),
+    ...HelicopterData3.flights.flatMap(filterPositions),
+    ...HelicopterData4.flights.flatMap(filterPositions),
+    ...HelicopterData5.flights.flatMap(filterPositions),
+    ...HelicopterData6.flights.flatMap(filterPositions),
+    ...HelicopterData7.flights.flatMap(filterPositions),
+    ...HelicopterData8.flights.flatMap(filterPositions),
+    ...HelicopterData9.flights.flatMap(filterPositions),
   ],
 };
+
 
 
 const Home: NextPage = () => {
