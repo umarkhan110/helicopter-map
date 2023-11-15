@@ -77,14 +77,8 @@ const filterPositions = (flight: FlightIntr): FilteredFlight => ({
 
 const HelicopterData: HelicopterDataInter = {
   flights: [
-    ...HelicopterData1.flights.map(filterPositions),
     ...HelicopterData2.flights.map(filterPositions),
-    ...HelicopterData3.flights.map(filterPositions),
-    ...HelicopterData4.flights.map(filterPositions),
     ...HelicopterData5.flights.map(filterPositions),
-    ...HelicopterData6.flights.map(filterPositions),
-    ...HelicopterData7.flights.map(filterPositions),
-    ...HelicopterData8.flights.map(filterPositions),
     ...HelicopterData9.flights.map(filterPositions),
   ],
 };
