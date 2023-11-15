@@ -17,58 +17,16 @@ import HelicopterData6 from "../../flight_chunks/flight_chunk_6.json";
 import HelicopterData7 from "../../flight_chunks/flight_chunk_7.json";
 import HelicopterData8 from "../../flight_chunks/flight_chunk_8.json";
 import HelicopterData9 from "../../flight_chunks/flight_chunk_9.json";
-// import HelicopterData11 from "../../flight_chunks/flight_chunk_11.json";
-// import HelicopterData12 from "../../flight_chunks/flight_chunk_12.json";
-// import HelicopterData13 from "../../flight_chunks/flight_chunk_13.json";
-// import HelicopterData14 from "../../flight_chunks/flight_chunk_14.json";
-// import HelicopterData15 from "../../flight_chunks/flight_chunk_15.json";
-// import HelicopterData16 from "../../flight_chunks/flight_chunk_16.json";
-// import HelicopterData17 from "../../flight_chunks/flight_chunk_17.json";
-// import HelicopterData18 from "../../flight_chunks/flight_chunk_18.json";
-// import HelicopterData19 from "../../flight_chunks/flight_chunk_19.json";
-// import HelicopterData21 from "../../flight_chunks/flight_chunk_21.json";
-// import HelicopterData22 from "../../flight_chunks/flight_chunk_22.json";
-// import HelicopterData23 from "../../flight_chunks/flight_chunk_23.json";
-// import HelicopterData24 from "../../flight_chunks/flight_chunk_24.json";
-// import HelicopterData25 from "../../flight_chunks/flight_chunk_25.json";
-// import HelicopterData26 from "../../flight_chunks/flight_chunk_26.json";
-// import HelicopterData27 from "../../flight_chunks/flight_chunk_27.json";
-// import HelicopterData28 from "../../flight_chunks/flight_chunk_28.json";
-// import HelicopterData29 from "../../flight_chunks/flight_chunk_29.json";
-// import HelicopterData31 from "../../flight_chunks/flight_chunk_31.json";
-// import HelicopterData32 from "../../flight_chunks/flight_chunk_32.json";
-// import HelicopterData33 from "../../flight_chunks/flight_chunk_33.json";
-// import HelicopterData34 from "../../flight_chunks/flight_chunk_34.json";
-// import HelicopterData35 from "../../flight_chunks/flight_chunk_35.json";
-// import HelicopterData36 from "../../flight_chunks/flight_chunk_36.json";
-// import HelicopterData37 from "../../flight_chunks/flight_chunk_37.json";
-// import HelicopterData38 from "../../flight_chunks/flight_chunk_38.json";
-// import HelicopterData39 from "../../flight_chunks/flight_chunk_39.json";
-// import HelicopterData41 from "../../flight_chunks/flight_chunk_41.json";
-// import HelicopterData42 from "../../flight_chunks/flight_chunk_42.json";
-// import HelicopterData43 from "../../flight_chunks/flight_chunk_43.json";
-// import HelicopterData44 from "../../flight_chunks/flight_chunk_44.json";
-// import HelicopterData45 from "../../flight_chunks/flight_chunk_45.json";
-// import HelicopterData46 from "../../flight_chunks/flight_chunk_46.json";
-// import HelicopterData47 from "../../flight_chunks/flight_chunk_47.json";
-// import HelicopterData48 from "../../flight_chunks/flight_chunk_48.json";
-// import HelicopterData49 from "../../flight_chunks/flight_chunk_49.json";
-// import HelicopterData50 from "../../flight_chunks/flight_chunk_50.json";
-// import HelicopterData51 from "../../flight_chunks/flight_chunk_51.json";
-// import HelicopterData10 from "../../flight_chunks/flight_chunk_10.json";
-// import HelicopterData20 from "../../flight_chunks/flight_chunk_20.json";
-// import HelicopterData30 from "../../flight_chunks/flight_chunk_30.json";
-// import HelicopterData40 from "../../flight_chunks/flight_chunk_40.json";
 
 interface Position {
-  latitude: number;
-  longitude: number;
-  altitude: number;
+  latitude?: number;
+  longitude?: number;
+  altitude?: number;
 }
 
 interface Flight {
   created: string;
-  positions: Position[];
+  positions?: Position[];
   callsign: string;
   aircraftRegistration: string;
   aircraftModeS: string;
@@ -95,48 +53,6 @@ const HelicopterData: HelicopterData = {
     ...HelicopterData7.flights,
     ...HelicopterData8.flights,
     ...HelicopterData9.flights,
-    // ...HelicopterData11.flights,
-    // ...HelicopterData12.flights,
-    // ...HelicopterData13.flights,
-    // ...HelicopterData14.flights,
-    // ...HelicopterData15.flights,
-    // ...HelicopterData16.flights,
-    // ...HelicopterData17.flights,
-    // ...HelicopterData18.flights,
-    // ...HelicopterData19.flights,
-    // ...HelicopterData21.flights,
-    // ...HelicopterData22.flights,
-    // ...HelicopterData23.flights,
-    // ...HelicopterData24.flights,
-    // ...HelicopterData25.flights,
-    // ...HelicopterData26.flights,
-    // ...HelicopterData27.flights,
-    // ...HelicopterData28.flights,
-    // ...HelicopterData29.flights,
-    // ...HelicopterData31.flights,
-    // ...HelicopterData32.flights,
-    // ...HelicopterData33.flights,
-    // ...HelicopterData34.flights,
-    // ...HelicopterData35.flights,
-    // ...HelicopterData36.flights,
-    // ...HelicopterData37.flights,
-    // ...HelicopterData38.flights,
-    // ...HelicopterData39.flights,
-    // ...HelicopterData41.flights,
-    // ...HelicopterData42.flights,
-    // ...HelicopterData43.flights,
-    // ...HelicopterData44.flights,
-    // ...HelicopterData45.flights,
-    // ...HelicopterData46.flights,
-    // ...HelicopterData47.flights,
-    // ...HelicopterData48.flights,
-    // ...HelicopterData49.flights,
-    // ...HelicopterData50.flights,
-    // ...HelicopterData51.flights,
-    // ...HelicopterData10.flights,
-    // ...HelicopterData20.flights,
-    // ...HelicopterData30.flights,
-    // ...HelicopterData40.flights,
   ],
 };
 
