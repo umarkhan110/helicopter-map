@@ -39,9 +39,9 @@ interface Flight {
 }
 
 interface PositionIntr {
-  latitude: number;
-  longitude: number;
-  altitude: number;
+  latitude: number | null;
+  longitude: number | null;
+  altitude: number | null;
 }
 
 interface FlightIntr {
@@ -58,22 +58,20 @@ interface FlightIntr {
   updated: string;
 }
 
-interface HelicopterDataInter {
-  flights: FlightIntr[];
+interface FilteredFlight extends FlightIntr {
+  positions: PositionIntr[];
 }
 
-const filterPositions = (flight: Flight): Flight => ({
+const filterPositions = (flight: FlightIntr): FilteredFlight => ({
   ...flight,
-  positions: flight.positions.filter((position): position is Position => {
-    return (
-      position.latitude !== null &&
-      position.longitude !== null &&
-      position.altitude !== null
-    );
-  }),
+  positions: flight.positions.filter((position): position is PositionIntr => (
+    position.latitude !== null &&
+    position.longitude !== null &&
+    position.altitude !== null
+  )),
 });
 
-const HelicopterData: any = {
+const HelicopterData: HelicopterDataInter = {
   flights: [
     ...HelicopterData1.flights.map(filterPositions),
     ...HelicopterData2.flights.map(filterPositions),
@@ -86,6 +84,7 @@ const HelicopterData: any = {
     ...HelicopterData9.flights.map(filterPositions),
   ],
 };
+
 
 const Home: NextPage = () => {
   const shouldfilteropeninit =
