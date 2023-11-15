@@ -82,11 +82,12 @@ interface Flight {
   updated: string;
 }
 
-type FlightsArray = (Flight & { positions?: Position[] })[];
 
 interface HelicopterData {
   flights: FlightsArray;
 }
+
+type FlightsArray = (Flight & { positions?: Position[] | undefined })[]
 
 const combinedData: FlightsArray = [
   ...HelicopterData1.flights,
