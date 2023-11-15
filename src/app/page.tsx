@@ -476,10 +476,15 @@ const Home: NextPage = () => {
 
   const fetchAddressSuggestions = async (address: string) => {
     try {
-      const response = await fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=pk.eyJ1Ijoia2VubmV0aG1lamlhIiwiYSI6ImNsZG1oYnpxNDA2aTQzb2tkYXU2ZWc1b3UifQ.PxO_XgMo13klJ3mQw1QxlQ`
-      );
+      // const response = await fetch(
+      //   `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=pk.eyJ1Ijoia2VubmV0aG1lamlhIiwiYSI6ImNsZG1oYnpxNDA2aTQzb2tkYXU2ZWc1b3UifQ.PxO_XgMo13klJ3mQw1QxlQ`
+      // );
 
+      const response = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+          address
+        )}.json?proximity=-118.25,34&access_token=YOUR_MAPBOX_ACCESS_TOKEN`
+      );
       const data = await response.json();
 
       if (data.features.length > 0) {
