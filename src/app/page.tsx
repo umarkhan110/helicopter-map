@@ -19,9 +19,15 @@ import HelicopterData8 from "../../flight_chunks/flight_chunk_8.json";
 import HelicopterData9 from "../../flight_chunks/flight_chunk_9.json";
 
 interface Position {
-  latitude?: number;
-  longitude?: number;
+  groundSpeed?: number;
+  heading?: number;
   altitude?: number;
+  verticalRate?: number;
+  latitude?: number | null; // Update to allow null
+  longitude?: number | null; // Update to allow null
+  squawkCode?: number | null;
+  source?: string;
+  timestamp?: string;
 }
 
 interface Flight {
