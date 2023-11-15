@@ -5,9 +5,9 @@ import { NextPage } from "next";
 
 import { Checkbox, MantineProvider } from "@mantine/core";
 // import Nav from "./components/nav";
-// import "./App.css";
-// import "./globals.css";
-// import "./Home.module.css";
+import "./App.css";
+import "./globals (1).css";
+import "./Home.module.css";
 import HelicopterData1 from "../../flight_chunks/flight_chunk_1.json";
 import HelicopterData2 from "../../flight_chunks/flight_chunk_2.json";
 import HelicopterData3 from "../../flight_chunks/flight_chunk_3.json";
@@ -566,14 +566,7 @@ const Home: NextPage = () => {
         // withGlobalStyles
         // withNormalizeCSS
       >
-        <div className="search-bar">
-          {/* <input
-            type="text"
-            placeholder="Enter an address"
-            value={userAddress}
-            onChange={handleAddressChange}
-            className="search-input"
-          /> */}
+        <div className="search-bar" style={{ top: '10px', right: '10px' }}>
           <div className=" w-[270px] flex flex-row justify-start items-center gap-3 h-10 rounded-3xl border border-[#D0D5DD] px-2 bg-gray-700 text-white">
             <svg viewBox="0 0 17.048 18" height={15} width={16}>
               <path
@@ -594,7 +587,7 @@ const Home: NextPage = () => {
           </button> */}
         </div>
 
-        <ul className="address-suggestions">
+        <ul className={`${addressSuggestions.length > 0 ? "block" : "hidden"} absolute w-72 top-16 right-4 z-10 bg-white text-black border border-[#D0D5DD] rounded-md shadow-md p-3`}>
           {addressSuggestions.map((suggestion, index) => (
             <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
               {suggestion}

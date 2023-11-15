@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 // import { Inter } from 'next/font/google'
-import './globals.css'
+// import './globals.css'
 import "./../../node_modules/mapbox-gl/dist/mapbox-gl.css";
 import "./../../node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 // const inter = Inter({ subsets: ['latin'] })

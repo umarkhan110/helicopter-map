@@ -2,30 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 .App {
   text-align: center;
 }
@@ -41,6 +17,65 @@ body {
   }
 }
 
+/* search bar */ 
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-button {
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.random-date-button {
+  /* background-color: #007BFF; */
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Add these styles to your CSS or a CSS module */
+.dice-icon {
+  width: 24px;
+  height: 24px;
+  /* Add your dice icon styles here */
+}
+
+@keyframes roll-dice {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(720deg);
+  }
+}
+
+
+/* animating css dice button */ 
+
+ 
+
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -49,7 +84,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: black;
 }
 
 .App-link {
