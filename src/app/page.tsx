@@ -81,7 +81,7 @@ interface Flight {
 }
 
 interface HelicopterData {
-  flights: Flight;
+  flights: Flight[];
 }
 
 const HelicopterData: HelicopterData = {
