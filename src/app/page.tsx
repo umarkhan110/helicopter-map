@@ -483,7 +483,7 @@ const Home: NextPage = () => {
       const response = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
           address
-        )}.json?proximity=-118.25,34&access_token=YOUR_MAPBOX_ACCESS_TOKEN`
+        )}.json?proximity=-118.25,34&access_token=pk.eyJ1Ijoia2VubmV0aG1lamlhIiwiYSI6ImNsZG1oYnpxNDA2aTQzb2tkYXU2ZWc1b3UifQ.PxO_XgMo13klJ3mQw1QxlQ`
       );
       const data = await response.json();
 
