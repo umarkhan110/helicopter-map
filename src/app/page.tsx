@@ -557,9 +557,9 @@ const Home: NextPage = () => {
     <div className="flex flex-col h-full w-screen absolute">
       <div className="flex-none">{/* <Nav /> */}</div>
       <MantineProvider
-        theme={{ colorScheme: "dark" }}
-        withGlobalStyles
-        withNormalizeCSS
+        // theme={{ colorScheme: "dark" }}
+        // withGlobalStyles
+        // withNormalizeCSS
       >
         <div className="search-bar">
           {/* <input
