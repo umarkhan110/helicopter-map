@@ -19,9 +19,9 @@ import HelicopterData8 from "../../flight_chunks/flight_chunk_8.json";
 import HelicopterData9 from "../../flight_chunks/flight_chunk_9.json";
 
 interface Position {
-  latitude: number;
-  longitude: number;
   altitude: number;
+  latitude: number;
+  longitude: number; 
 }
 
 interface Flight {
@@ -38,65 +38,23 @@ interface Flight {
   updated: string;
 }
 
-interface PositionIntr {
-  latitude: number | null;
-  longitude: number | null;
-  altitude: number | null;
+interface HelicopterData {
+  flights: Flight[];
 }
 
-interface FlightIntr {
-  created: string;
-  positions: PositionIntr[];
-  callsign: string;
-  aircraftRegistration: string;
-  aircraftModeS: string;
-  aircraftType: string;
-  aircraftClasses: string[];
-  aircraftTypeDescription: string;
-  altitude: number;
-  source: string;
-  updated: string;
-}
-
-interface FilteredFlight extends FlightIntr {
-  positions: PositionIntr[];
-}
-
-interface HelicopterDataInter {
-  flights: FlightIntr[];
-}
-
-const filterPositions = (flight: Flight): Flight[] => {
-  return flight.positions
-    .filter((position): position is Position => {
-      return (
-        position.latitude !== null &&
-        position.longitude !== null &&
-        position.altitude !== null
-      );
-    })
-    .map((position) => ({
-      ...flight,
-      positions: [position], // Wrap the filtered position in an array
-    }));
-};
-
-
-const HelicopterData: HelicopterDataInter = {
+const HelicopterData: HelicopterData = {
   flights: [
-    ...HelicopterData1.flights.flatMap(filterPositions),
-    ...HelicopterData2.flights.flatMap(filterPositions),
-    ...HelicopterData3.flights.flatMap(filterPositions),
-    ...HelicopterData4.flights.flatMap(filterPositions),
-    ...HelicopterData5.flights.flatMap(filterPositions),
-    ...HelicopterData6.flights.flatMap(filterPositions),
-    ...HelicopterData7.flights.flatMap(filterPositions),
-    ...HelicopterData8.flights.flatMap(filterPositions),
-    ...HelicopterData9.flights.flatMap(filterPositions),
+    ...HelicopterData1.flights,
+    ...HelicopterData2.flights,
+    ...HelicopterData3.flights,
+    ...HelicopterData4.flights,
+    ...HelicopterData5.flights,
+    ...HelicopterData6.flights,
+    ...HelicopterData7.flights,
+    ...HelicopterData8.flights,
+    ...HelicopterData9.flights,
   ],
 };
-
-
 
 const Home: NextPage = () => {
   const shouldfilteropeninit =
@@ -207,7 +165,7 @@ const Home: NextPage = () => {
         );
 
         // Calculate take-off and landing times for the flight
-        const calculateTakeOffAndLanding = (positions: Position[]) => {
+        const calculateTakeOffAndLanding = (positions: Position[] | undefined) => {
           if (!positions || positions.length === 0) {
             // Handle the case where positions is undefined or empty
             console.error("positions is undefined or empty");
