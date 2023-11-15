@@ -60,8 +60,6 @@ import HelicopterData20 from "../../flight_chunks/flight_chunk_20.json";
 import HelicopterData30 from "../../flight_chunks/flight_chunk_30.json";
 import HelicopterData40 from "../../flight_chunks/flight_chunk_40.json";
 
-
-
 interface Position {
   latitude: number;
   longitude: number;
@@ -82,73 +80,67 @@ interface Flight {
   updated: string;
 }
 
-
 interface HelicopterData {
-  flights: FlightsArray;
+  flights: Flight;
 }
 
-type FlightsArray = (Flight & { positions?: Position[] | undefined })[]
-
-const combinedData: FlightsArray = [
-  ...HelicopterData1.flights,
-  ...HelicopterData2.flights,
-  ...HelicopterData3.flights,
-  ...HelicopterData4.flights,
-  ...HelicopterData5.flights,
-  ...HelicopterData6.flights,
-  ...HelicopterData7.flights,
-  ...HelicopterData8.flights,
-  ...HelicopterData9.flights,
-...HelicopterData11.flights,
-...HelicopterData12.flights,
-...HelicopterData13.flights,
-...HelicopterData14.flights,
-...HelicopterData15.flights,
-...HelicopterData16.flights,
-...HelicopterData17.flights,
-...HelicopterData18.flights,
-...HelicopterData19.flights,
-...HelicopterData21.flights,
-...HelicopterData22.flights,
-...HelicopterData23.flights,
-...HelicopterData24.flights,
-...HelicopterData25.flights,
-...HelicopterData26.flights,
-...HelicopterData27.flights,
-...HelicopterData28.flights,
-...HelicopterData29.flights,
-...HelicopterData31.flights,
-...HelicopterData32.flights,
-...HelicopterData33.flights,
-...HelicopterData34.flights,
-...HelicopterData35.flights,
-...HelicopterData36.flights,
-...HelicopterData37.flights,
-...HelicopterData38.flights,
-...HelicopterData39.flights,
-...HelicopterData41.flights,
-...HelicopterData42.flights,
-...HelicopterData43.flights,
-...HelicopterData44.flights,
-...HelicopterData45.flights,
-...HelicopterData46.flights,
-...HelicopterData47.flights,
-...HelicopterData48.flights,
-...HelicopterData49.flights,
-...HelicopterData50.flights,
-...HelicopterData51.flights,
-...HelicopterData10.flights,
-...HelicopterData20.flights,
-...HelicopterData30.flights,
-...HelicopterData40.flights,
-];
-
 const HelicopterData: HelicopterData = {
-  flights: combinedData,
+  flights: [
+    ...HelicopterData1.flights,
+    ...HelicopterData2.flights,
+    ...HelicopterData3.flights,
+    ...HelicopterData4.flights,
+    ...HelicopterData5.flights,
+    ...HelicopterData6.flights,
+    ...HelicopterData7.flights,
+    ...HelicopterData8.flights,
+    ...HelicopterData9.flights,
+    ...HelicopterData11.flights,
+    ...HelicopterData12.flights,
+    ...HelicopterData13.flights,
+    ...HelicopterData14.flights,
+    ...HelicopterData15.flights,
+    ...HelicopterData16.flights,
+    ...HelicopterData17.flights,
+    ...HelicopterData18.flights,
+    ...HelicopterData19.flights,
+    ...HelicopterData21.flights,
+    ...HelicopterData22.flights,
+    ...HelicopterData23.flights,
+    ...HelicopterData24.flights,
+    ...HelicopterData25.flights,
+    ...HelicopterData26.flights,
+    ...HelicopterData27.flights,
+    ...HelicopterData28.flights,
+    ...HelicopterData29.flights,
+    ...HelicopterData31.flights,
+    ...HelicopterData32.flights,
+    ...HelicopterData33.flights,
+    ...HelicopterData34.flights,
+    ...HelicopterData35.flights,
+    ...HelicopterData36.flights,
+    ...HelicopterData37.flights,
+    ...HelicopterData38.flights,
+    ...HelicopterData39.flights,
+    ...HelicopterData41.flights,
+    ...HelicopterData42.flights,
+    ...HelicopterData43.flights,
+    ...HelicopterData44.flights,
+    ...HelicopterData45.flights,
+    ...HelicopterData46.flights,
+    ...HelicopterData47.flights,
+    ...HelicopterData48.flights,
+    ...HelicopterData49.flights,
+    ...HelicopterData50.flights,
+    ...HelicopterData51.flights,
+    ...HelicopterData10.flights,
+    ...HelicopterData20.flights,
+    ...HelicopterData30.flights,
+    ...HelicopterData40.flights,
+  ],
 };
 
 const Home: NextPage = () => {
-
   const shouldfilteropeninit =
     typeof window != "undefined" ? window.innerWidth >= 640 : false;
   const divRef = useRef<HTMLDivElement | null>(null);
@@ -646,8 +638,7 @@ const Home: NextPage = () => {
   });
   return (
     <div className="flex flex-col h-full w-screen absolute">
-      <div className="flex-none">
-        {/* <Nav /> */}</div>
+      <div className="flex-none">{/* <Nav /> */}</div>
       <MantineProvider
         theme={{ colorScheme: "dark" }}
         withGlobalStyles
@@ -669,10 +660,12 @@ const Home: NextPage = () => {
                 fill="#757575"
               />
             </svg>
-            <input className="font-inter text-md text-regular text-left text-white bg-transparent outline-none"
-            placeholder="Search" 
-            value={userAddress}
-            onChange={handleAddressChange} />
+            <input
+              className="font-inter text-md text-regular text-left text-white bg-transparent outline-none"
+              placeholder="Search"
+              value={userAddress}
+              onChange={handleAddressChange}
+            />
           </div>
           {/* <button onClick={handleAddressSubmit} className="search-button">
             Find Address
