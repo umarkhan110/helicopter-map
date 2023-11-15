@@ -165,15 +165,23 @@ const Home: NextPage = () => {
         );
 
         // Calculate take-off and landing times for the flight
-        const calculateTakeOffAndLanding = (positions: Position[]) => {
+        const calculateTakeOffAndLanding = (positions: Position[] | undefined) => {
+          if (!positions || positions.length === 0) {
+            // Handle the case where positions is undefined or empty
+            console.error("positions is undefined or empty");
+            return {
+              calculatedTakeOff: 0,
+              calculatedLanding: 0,
+            };
+          }
           let takeOffAltitude = positions[0].altitude;
           let landingAltitude = positions[positions.length - 1].altitude;
           const ALTITUDE_TO_MINUTES_CONVERSION_RATE = 0.02;
           for (let i = 1; i < positions.length; i++) {
-            if (positions[i].altitude > takeOffAltitude) {
+            if (positions[i] && positions[i].altitude > takeOffAltitude) {
               takeOffAltitude = positions[i].altitude;
             }
-            if (positions[i].altitude < landingAltitude) {
+            if (positions[i] && positions[i].altitude < landingAltitude) {
               landingAltitude = positions[i].altitude;
             }
           }
