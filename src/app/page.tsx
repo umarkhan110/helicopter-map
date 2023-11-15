@@ -66,14 +66,21 @@ interface HelicopterDataInter {
   flights: FlightIntr[];
 }
 
-const filterPositions = (flight: FlightIntr): FilteredFlight => ({
-  ...flight,
-  positions: flight.positions.filter((position): position is PositionIntr => (
-    position.latitude !== null &&
-    position.longitude !== null &&
-    position.altitude !== null
-  )),
-});
+const filterPositions = (flight: Flight): Flight[] => {
+  return flight.positions
+    .filter((position): position is Position => {
+      return (
+        position.latitude !== null &&
+        position.longitude !== null &&
+        position.altitude !== null
+      );
+    })
+    .map((position) => ({
+      ...flight,
+      positions: [position], // Wrap the filtered position in an array
+    }));
+};
+
 
 const HelicopterData: HelicopterDataInter = {
   flights: [
