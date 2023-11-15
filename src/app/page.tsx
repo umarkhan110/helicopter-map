@@ -340,7 +340,7 @@ const Home: NextPage = () => {
 
           indexRef.current = 0;
 
-          function animatePoints() {
+          const animatePoints = () => {
             const nextIndex = indexRef.current + 1;
             if (nextIndex < routeData!.length) {
               setTimeout(() => {
