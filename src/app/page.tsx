@@ -45,7 +45,7 @@ interface HelicopterDataInter {
 const filterPositions = (flight: Flight) => ({
   ...flight,
   positions: flight.positions.filter(
-    (position) =>
+    (position): position is Position => 
       position.latitude !== null &&
       position.longitude !== null &&
       position.altitude !== null
