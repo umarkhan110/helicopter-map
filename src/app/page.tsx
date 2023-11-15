@@ -19,40 +19,50 @@ import HelicopterData8 from "../../flight_chunks/flight_chunk_8.json";
 import HelicopterData9 from "../../flight_chunks/flight_chunk_9.json";
 
 interface Position {
-  altitude?: number;
-  latitude?: number | null;
-  longitude?: number | null; 
+  latitude: number;
+  longitude: number;
+  altitude: number;
 }
 
 interface Flight {
   created: string;
-  positions?: Position[];
+  positions: Position[];
   callsign: string;
-  aircraftRegistration?: string;
-  aircraftModeS?: string;
-  aircraftType?: string;
+  aircraftRegistration: string;
+  aircraftModeS: string;
+  aircraftType: string;
   aircraftClasses: string[];
-  aircraftTypeDescription?: string;
-  altitude?: number;
-  source?: string;
+  aircraftTypeDescription: string;
+  altitude: number;
+  source: string;
   updated: string;
 }
 
-interface HelicopterData {
+interface HelicopterDataInter {
   flights: Flight[];
 }
 
-const HelicopterData: HelicopterData = {
+const filterPositions = (flight: Flight) => ({
+  ...flight,
+  positions: flight.positions.filter(
+    (position) =>
+      position.latitude !== null &&
+      position.longitude !== null &&
+      position.altitude !== null
+  ),
+});
+
+const HelicopterDataWithoutNulls: HelicopterDataInter = {
   flights: [
-    ...HelicopterData1.flights,
-    ...HelicopterData2.flights,
-    ...HelicopterData3.flights,
-    ...HelicopterData4.flights,
-    ...HelicopterData5.flights,
-    ...HelicopterData6.flights,
-    ...HelicopterData7.flights,
-    ...HelicopterData8.flights,
-    ...HelicopterData9.flights,
+    ...HelicopterData1.flights.map(filterPositions),
+    ...HelicopterData2.flights.map(filterPositions),
+    ...HelicopterData3.flights.map(filterPositions),
+    ...HelicopterData4.flights.map(filterPositions),
+    ...HelicopterData5.flights.map(filterPositions),
+    ...HelicopterData6.flights.map(filterPositions),
+    ...HelicopterData7.flights.map(filterPositions),
+    ...HelicopterData8.flights.map(filterPositions),
+    ...HelicopterData9.flights.map(filterPositions),
   ],
 };
 
@@ -165,7 +175,7 @@ const Home: NextPage = () => {
         );
 
         // Calculate take-off and landing times for the flight
-        const calculateTakeOffAndLanding = (positions: Position[] | undefined) => {
+        const calculateTakeOffAndLanding = (positions: Position[]) => {
           if (!positions || positions.length === 0) {
             // Handle the case where positions is undefined or empty
             console.error("positions is undefined or empty");
@@ -174,28 +184,31 @@ const Home: NextPage = () => {
               calculatedLanding: 0,
             };
           }
+        
           let takeOffAltitude = positions[0].altitude;
           let landingAltitude = positions[positions.length - 1].altitude;
           const ALTITUDE_TO_MINUTES_CONVERSION_RATE = 0.02;
+        
           for (let i = 1; i < positions.length; i++) {
-            if (positions[i] && positions[i].altitude > takeOffAltitude) {
-              takeOffAltitude = positions[i].altitude;
-            }
-            if (positions[i] && positions[i].altitude < landingAltitude) {
-              landingAltitude = positions[i].altitude;
+            if (positions[i]?.altitude !== undefined) {
+              if (positions[i].altitude > takeOffAltitude) {
+                takeOffAltitude = positions[i].altitude;
+              }
+              if (positions[i].altitude < landingAltitude) {
+                landingAltitude = positions[i].altitude;
+              }
             }
           }
-
-          const takeOffTime =
-            takeOffAltitude * ALTITUDE_TO_MINUTES_CONVERSION_RATE;
-          const landingTime =
-            landingAltitude * ALTITUDE_TO_MINUTES_CONVERSION_RATE;
-
+        
+          const takeOffTime = takeOffAltitude * ALTITUDE_TO_MINUTES_CONVERSION_RATE;
+          const landingTime = landingAltitude * ALTITUDE_TO_MINUTES_CONVERSION_RATE;
+        
           return {
             calculatedTakeOff: takeOffTime,
             calculatedLanding: landingTime,
           };
         };
+        
 
         const { calculatedTakeOff, calculatedLanding } =
           calculateTakeOffAndLanding(filteredPositions);
