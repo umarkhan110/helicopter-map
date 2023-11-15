@@ -38,21 +38,42 @@ interface Flight {
   updated: string;
 }
 
-interface HelicopterDataInter {
-  flights: Flight[];
+interface PositionIntr {
+  latitude: number;
+  longitude: number;
+  altitude: number;
 }
 
-const filterPositions = (flight: Flight) => ({
+interface FlightIntr {
+  created: string;
+  positions: PositionIntr[];
+  callsign: string;
+  aircraftRegistration: string;
+  aircraftModeS: string;
+  aircraftType: string;
+  aircraftClasses: string[];
+  aircraftTypeDescription: string;
+  altitude: number;
+  source: string;
+  updated: string;
+}
+
+interface HelicopterDataInter {
+  flights: FlightIntr[];
+}
+
+const filterPositions = (flight: Flight): Flight => ({
   ...flight,
-  positions: flight.positions.filter(
-    (position): position is Position => 
+  positions: flight.positions.filter((position): position is Position => {
+    return (
       position.latitude !== null &&
       position.longitude !== null &&
       position.altitude !== null
-  ),
+    );
+  }),
 });
 
-const HelicopterData: HelicopterDataInter = {
+const HelicopterData: any = {
   flights: [
     ...HelicopterData1.flights.map(filterPositions),
     ...HelicopterData2.flights.map(filterPositions),
