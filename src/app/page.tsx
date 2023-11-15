@@ -28,11 +28,6 @@ interface Flight {
   created: string;
   positions: Position[];
   callsign: string;
-  aircraftRegistration: string;
-  aircraftModeS: string;
-  aircraftType: string;
-  aircraftClasses: string[];
-  aircraftTypeDescription: string;
   altitude: number;
   source: string;
   updated: string;
@@ -248,11 +243,6 @@ const Home: NextPage = () => {
             },
             properties: {
               callsign: selectedFlight.callsign,
-              aircraftRegistration: selectedFlight.aircraftRegistration,
-              aircraftModeS: selectedFlight.aircraftModeS,
-              aircraftType: selectedFlight.aircraftType,
-              aircraftClasses: selectedFlight.aircraftClasses,
-              aircraftTypeDescription: selectedFlight.aircraftTypeDescription,
               altitude: selectedFlight.altitude,
               source: selectedFlight.source,
               created: selectedFlight.created,
