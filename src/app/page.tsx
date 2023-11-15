@@ -62,6 +62,10 @@ interface FilteredFlight extends FlightIntr {
   positions: PositionIntr[];
 }
 
+interface HelicopterDataInter {
+  flights: FlightIntr[];
+}
+
 const filterPositions = (flight: FlightIntr): FilteredFlight => ({
   ...flight,
   positions: flight.positions.filter((position): position is PositionIntr => (
@@ -71,7 +75,7 @@ const filterPositions = (flight: FlightIntr): FilteredFlight => ({
   )),
 });
 
-const HelicopterData: FilteredFlight = {
+const HelicopterData: HelicopterDataInter = {
   flights: [
     ...HelicopterData1.flights.map(filterPositions),
     ...HelicopterData2.flights.map(filterPositions),
