@@ -19,28 +19,22 @@ import HelicopterData8 from "../../flight_chunks/flight_chunk_8.json";
 import HelicopterData9 from "../../flight_chunks/flight_chunk_9.json";
 
 interface Position {
-  groundSpeed?: number;
-  heading?: number;
   altitude?: number;
-  verticalRate?: number;
-  latitude?: number | null; // Update to allow null
-  longitude?: number | null; // Update to allow null
-  squawkCode?: number | null;
-  source?: string;
-  timestamp?: string;
+  latitude?: number | null;
+  longitude?: number | null; 
 }
 
 interface Flight {
   created: string;
   positions?: Position[];
   callsign: string;
-  aircraftRegistration: string;
-  aircraftModeS: string;
-  aircraftType: string;
+  aircraftRegistration?: string;
+  aircraftModeS?: string;
+  aircraftType?: string;
   aircraftClasses: string[];
-  aircraftTypeDescription: string;
-  altitude: number;
-  source: string;
+  aircraftTypeDescription?: string;
+  altitude?: number;
+  source?: string;
   updated: string;
 }
 
